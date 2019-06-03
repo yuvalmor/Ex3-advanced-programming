@@ -10,6 +10,7 @@ namespace Exercise3.Models
         public Client()
         {
             client = new TcpClient();
+            
         }
 
         public void Connect(string ip, int port)
