@@ -5,39 +5,32 @@ namespace Exercise3.Models
 {
     public class Client
     {
-        private static Client s_instace = null;
-        private static TcpClient client;
-        private bool connected = false;
+        private TcpClient client;
 
-        public static Client Instance
+        public Client()
         {
-            get
-            {
-                if (s_instace == null)
-                {
-                    s_instace = new Client();
-                    client = new TcpClient();
-                }
-                return s_instace;
-            }
+            client = new TcpClient();
         }
-
 
         public void Connect(string ip, int port)
         {
-            while (!connected)
+            while (true)
             {
                 try
                 {
                     client.Connect(ip, port);
-                    connected = true;
                     break;
                 }
                 catch { }
             }
         }
 
-        public string GetLine(string kind)
+        public void Close()
+        {
+            this.client.Close();
+        }
+
+        public string GetRequestToSimulator(string kind)
         {
             string request = "get ";
             switch (kind)
@@ -62,13 +55,14 @@ namespace Exercise3.Models
             request += Consts.NEW_LINE;
             return request;
         }
-        public string GetData(string line)
+
+        public string GetInfo(string request)
         {
             string info = "";
             try
             {
                 ASCIIEncoding asen = new ASCIIEncoding();
-                byte[] buffer = asen.GetBytes(line);
+                byte[] buffer = asen.GetBytes(request);
                 NetworkStream stream = client.GetStream();
                 stream.Write(buffer, 0, buffer.Length);
 
@@ -78,17 +72,12 @@ namespace Exercise3.Models
                 {
                     info = System.Text.Encoding.UTF8.GetString(readBytes, 0, readBytes.Length);
                     string[] splitInfo = info.Split('\'');
-                    info = splitInfo[1];
-                }
-                else
-                {
-                    // print message?
+                    info = splitInfo[Consts.INFO_POSITION];
                 }
 
             }
             catch { }
             return info;
-
         }
 
     }

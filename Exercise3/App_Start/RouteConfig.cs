@@ -13,7 +13,7 @@ namespace Exercise3
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-           routes.MapRoute("display", "display/{ip}/{port}/{time}",
+           routes.MapRoute("Display", "display/{ip}/{port}/{time}",
            defaults: new { controller = "Flight", action = "Display", time = UrlParameter.Optional });
 
             routes.MapRoute(

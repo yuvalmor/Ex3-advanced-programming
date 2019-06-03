@@ -5,6 +5,7 @@ namespace Exercise3.Models
     {
         public const int BUFFER_SIZE = 1024;
         public const int READ_FAILED = -1;
+        public const int INFO_POSITION = 1;
         public const string LON_XML = "longitude-deg";
         public const string LAT_XML = "latitude-deg";
         public const string THROTTLE_XML = "/controls/engines/current-engine/throttle";

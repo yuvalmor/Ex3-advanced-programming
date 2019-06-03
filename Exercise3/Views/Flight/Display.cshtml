@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "Display";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .bg1 {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width" />
+    <title>Display</title>
+</head>
+<body background="~/Utils/map.png" class="bg1">
+    <canvas id="myCanvas"></canvas>
+    <script>
+        var canvas = document.getElementById("myCanvas");
+        canvas.width = window.innerWidth-100;
+        canvas.height = window.innerHeight-100;
+        var ctx = canvas.getContext("2d");
+        var IntervalTime = (@ViewBag.time) * 1000;
+        console.log(IntervalTime);
+
+        function normalizeLongitude(lon) {
+            return ((parseFloat(lon) + 180) * canvas.width / 360);
+        }
+
+        console.log(canvas.width);
+        console.log(canvas.height);
+
+        function normalizeLatitude(lat) {
+
+            var newLat = ((parseFloat(lat) + 90) * canvas.height / 180);
+            if (parseFloat(lat) > 0) {
+                newLat = canvas.height - newLat;
+            }
+            return newLat;
+        }
+        
+        draw = function (lon,lat) {
+            console.log(lon);
+            console.log(lat);
+            var normLon = normalizeLongitude(lon); 
+            var normLat = normalizeLatitude(lat);
+            console.log(normLon);
+            console.log(normLat);
+            ctx.arc(normLon,normLat,5,0,2*Math.PI);
+            ctx.strokeStyle = "black";
+            ctx.fillStyle = "pink";
+            ctx.fill();
+            ctx.stroke();
+        };
+
+        // get the first position
+        InitialPosition = function () {
+            var urlLoc = "/Flight/GetPlaneLocation";
+            $.get(urlLoc, null, function (xml) {
+                var xmlDoc = $.parseXML(xml),
+                $xml = $(xmlDoc),
+                lon = $xml.find("NewLon").text();
+                lat = $xml.find("NewLat").text();
+                draw(lon,lat);
+            });
+        };
+        InitialPosition();
+    </script>
+</body>
+</html>
