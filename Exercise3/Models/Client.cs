@@ -87,7 +87,6 @@ namespace Exercise3.Models
 
             }
             catch { }
-
             return info;
 
         }
