@@ -58,5 +58,43 @@ namespace Exercise3.Controllers
             return sb.ToString();
         }
 
+        public string GetPlaneTreck()
+        {
+            Client client = FlightModel.Instance.GetClient();
+
+            string latLine = client.GetRequestToSimulator("latitude");
+            string lonLine = client.GetRequestToSimulator("longitude");
+
+            string lat = client.GetInfo(latLine);
+            string lon = client.GetInfo(lonLine);
+
+            Position position = new Position();
+            position.Lat = Double.Parse(lat);
+            position.Lon = Double.Parse(lon);
+            
+            Position lastPosition = FlightModel.Instance.GetPositions().Last();
+            FlightModel.Instance.GetPositions().Add(position);
+
+            return TreckToXml(position, lastPosition);
+        }
+
+        private string TreckToXml(Position newPosition, Position lastPossition)
+        {
+            //Initiate XML stuff
+            StringBuilder sb = new StringBuilder();
+            XmlWriterSettings settings = new XmlWriterSettings();
+            XmlWriter writer = XmlWriter.Create(sb, settings);
+
+            writer.WriteStartDocument();
+            writer.WriteStartElement("Treck");
+            newPosition.NewPosToXml(writer);
+            lastPossition.LastPosToXml(writer);
+            writer.WriteEndElement();
+            writer.WriteEndDocument();
+            writer.Flush();
+            return sb.ToString();
+        }
+
+
     }
 }
