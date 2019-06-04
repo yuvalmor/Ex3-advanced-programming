@@ -5,6 +5,7 @@ namespace Exercise3.Models
 {
     public class Client
     {
+        
         private TcpClient client;
 
         public Client()
@@ -64,10 +65,16 @@ namespace Exercise3.Models
                 ASCIIEncoding asen = new ASCIIEncoding();
                 byte[] buffer = asen.GetBytes(request);
                 NetworkStream stream = client.GetStream();
-                stream.Write(buffer, 0, buffer.Length);
 
-                byte[] readBytes = new byte[client.ReceiveBufferSize];
-                int sizeRead = stream.Read(readBytes, 0, client.ReceiveBufferSize);
+                byte[] readBytes;
+                int sizeRead;
+                lock (FlightModel.Instance.getLock())
+                {
+                    stream.Write(buffer, 0, buffer.Length);
+                    readBytes = new byte[client.ReceiveBufferSize];
+                    sizeRead = stream.Read(readBytes, 0, client.ReceiveBufferSize);
+                }
+
                 if (sizeRead > 0)
                 {
                     info = System.Text.Encoding.UTF8.GetString(readBytes, 0, readBytes.Length);
