@@ -101,7 +101,7 @@
                 console.log(arr[(iter * 2) + 2]);
                 console.log(arr[(iter * 2) + 3]);
                 drawTreck(arr[(iter * 2) + 2], arr[(iter * 2) + 3], arr[(iter * 2)], arr[(iter * 2) + 1]);
-                draw(arr[(iter * 2) + 2], arr[(iter * 2) + 3]);
+
             } else {
                 console.log("finish");
                 clearInterval(interval);
@@ -129,7 +129,6 @@
             var sizeArr;
             var arr;
             getDataFromFile();
-            
         } else {
             InitialPosition();
             if (IntervalTime > 0) {
