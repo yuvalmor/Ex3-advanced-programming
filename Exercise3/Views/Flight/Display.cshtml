@@ -26,14 +26,17 @@
         console.log(IntervalTime);
 
         function normalizeLongitude(lon) {
-            return ((parseFloat(lon) + 180) * canvas.width / 360);
+            console.log(lon);
+            var newLon = ((parseFloat(lon) + 180) * canvas.width / 360);
+            console.log(newLon);
+            return newLon;
         }
 
         function normalizeLatitude(lat) {
+            console.log(lat);
             var newLat = ((parseFloat(lat) + 90) * canvas.height / 180);
-            if (parseFloat(lat) > 0) {
-                newLat = canvas.height - newLat;
-            }
+            newLat = canvas.height - newLat;
+            console.log(newLat);
             return newLat;
         }
         
