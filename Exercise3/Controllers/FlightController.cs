@@ -1,6 +1,7 @@
 ﻿using Exercise3.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -20,8 +21,19 @@ namespace Exercise3.Controllers
         [HttpGet]
         public ActionResult Display(string ip, int port, int? time = 0)
         {
-            FlightModel.Instance.InitialClient(ip, port);
-            ViewBag.time = time;
+            System.Net.IPAddress validIp = null;
+            ViewBag.readFromFile = 0;
+            if (System.Net.IPAddress.TryParse(ip, out validIp))
+            {
+                FlightModel.Instance.InitialClient(ip, port);
+                ViewBag.time = time;
+            }
+            else
+            {
+                ViewBag.readFromFile = 1;
+                ViewBag.time = port;
+                ViewBag.fileName = ip;
+            }
             return View();
         }
 
@@ -95,6 +107,13 @@ namespace Exercise3.Controllers
             return sb.ToString();
         }
 
+        [HttpPost]
+        public string GetPositionsFromFile(string fileName)
+        {
+            string positions = FlightModel.Instance.ReadData(fileName);
+            Console.WriteLine(positions);
+            return positions;
+        }
 
     }
 }

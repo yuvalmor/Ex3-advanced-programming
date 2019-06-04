@@ -13,5 +13,6 @@ namespace Exercise3.Models
         public const string LATITUDE_XML = "/position/latitude-deg";
         public const string LONGIDUTE_XML = "/position/longitude-deg";
         public const string NEW_LINE = "\r\n";
+        public const string SCENARIO_FILE = "~/App_Data/{0}.txt";
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Web;
 
 namespace Exercise3.Models
 {
@@ -39,6 +41,24 @@ namespace Exercise3.Models
         {
             client = new Client();
             client.Connect(ip, port);
+        }
+
+        public string ReadData(string fileName)
+        {
+            string path = HttpContext.Current.Server.MapPath(String.Format(Consts.SCENARIO_FILE, fileName));
+            string[] lines = System.IO.File.ReadAllLines(path);
+            string data = "";
+            string[] temp;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                temp = lines[i].Split(',');
+                data += temp[0];
+                data += ",";
+                data += temp[1];
+                data += ",";
+            }
+            Console.WriteLine(data);
+            return data;
         }
     }
 }

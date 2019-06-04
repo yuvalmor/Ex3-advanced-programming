@@ -1,6 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "Display";
+    ViewBag.Index = 0;
 }
 <!DOCTYPE html>
 <html>
@@ -24,6 +25,7 @@
         var ctx = canvas.getContext("2d");
         var IntervalTime = (@ViewBag.time) * 1000;
         console.log(IntervalTime);
+
 
         function normalizeLongitude(lon) {
             console.log(lon);
@@ -92,11 +94,43 @@
                 drawTreck(lon, lat, lastLon, lastLat);
             });
         }
-       
-        InitialPosition();
-        if (IntervalTime > 0) {
-            setInterval(DesplayTreck, IntervalTime);
+        
+        DisplayFromFile = function (arr, size, iter) {
+            iter++;
+            if (iter <= ((size / 2) - 1)) {
+                var i = @ViewBag.Index;
+                drawTreck(arr[i], arr[i + 1], arr[i + 2], arr[i + 3]);
+            } else {
+                clearInterval(interval);
+                alert("finished");
+            }
         }
+
+        getDataFromFile = function () {
+            var file = "@ViewBag.fileName";
+            console.log(file);
+            var urlTreck = "/Flight/GetPositionsFromFile";
+            $.get(urlTreck, file, function (data) {
+                var arr = data.split(",");
+                var size = arr.length;
+                var iter = 0;
+                interval = setInterval(DisplayFromFile(arr,size, iter), IntervalTime);
+            });
+        }
+        
+        if (@ViewBag.readFromFile == 1) {
+            var interval;
+            getDataFromFile();
+            
+
+        } else {
+            InitialPosition();
+            if (IntervalTime > 0) {
+                setInterval(DesplayTreck, IntervalTime);
+            }
+        }
+
+
     </script>
 </body>
 </html>
