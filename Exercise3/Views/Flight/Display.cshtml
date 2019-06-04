@@ -1,7 +1,6 @@
 ﻿
 @{
     ViewBag.Title = "Display";
-    ViewBag.Index = 0;
 }
 <!DOCTYPE html>
 <html>
@@ -28,17 +27,13 @@
 
 
         function normalizeLongitude(lon) {
-            console.log(lon);
             var newLon = ((parseFloat(lon) + 180) * canvas.width / 360);
-            console.log(newLon);
             return newLon;
         }
 
         function normalizeLatitude(lat) {
-            console.log(lat);
             var newLat = ((parseFloat(lat) + 90) * canvas.height / 180);
             newLat = canvas.height - newLat;
-            console.log(newLat);
             return newLat;
         }
         
@@ -70,11 +65,11 @@
             var lastNormLon = normalizeLongitude(LastLon);
             var lastNormLat = normalizeLatitude(LastLat);
 
-            console.log("draw treck\n");
-            console.log(lastNormLon);
-            console.log(lastNormLat);
+            console.log("in track");
             console.log(newNormLon);
             console.log(newNormLat);
+            console.log(lastNormLon);
+            console.log(lastNormLat);
 
             ctx.moveTo(lastNormLon, lastNormLat);
             ctx.lineTo(newNormLon, newNormLat);
@@ -95,42 +90,53 @@
             });
         }
         
-        DisplayFromFile = function (arr, size, iter) {
-            iter++;
-            if (iter <= ((size / 2) - 1)) {
-                var i = @ViewBag.Index;
-                drawTreck(arr[i], arr[i + 1], arr[i + 2], arr[i + 3]);
+        DisplayFromFile = function () {
+            console.log("in dis");
+            if (iter < ((sizeArr-1) / 2)-1) {
+                console.log("start");
+                console.log(iter);
+                console.log(sizeArr);
+                console.log(arr[iter * 2]);
+                console.log(arr[(iter * 2) + 1]);
+                console.log(arr[(iter * 2) + 2]);
+                console.log(arr[(iter * 2) + 3]);
+                drawTreck(arr[(iter * 2) + 2], arr[(iter * 2) + 3], arr[(iter * 2)], arr[(iter * 2) + 1]);
+                draw(arr[(iter * 2) + 2], arr[(iter * 2) + 3]);
             } else {
+                console.log("finish");
                 clearInterval(interval);
                 alert("finished");
             }
+            console.log(iter);
+            iter = iter + 1;
+            console.log("finish iteration");
         }
 
         getDataFromFile = function () {
             var file = "@ViewBag.fileName";
-            console.log(file);
             var urlTreck = "/Flight/GetPositionsFromFile";
-            $.get(urlTreck, file, function (data) {
-                var arr = data.split(",");
-                var size = arr.length;
-                var iter = 0;
-                interval = setInterval(DisplayFromFile(arr,size, iter), IntervalTime);
+            $.get(urlTreck, { fileName: file }, function (data) {
+                arr = data.split(",");
+                sizeArr = arr.length;
+                draw(arr[0], arr[1]);
+                interval = setInterval(DisplayFromFile, IntervalTime);
             });
         }
         
         if (@ViewBag.readFromFile == 1) {
             var interval;
+            var iter = 0;
+            var sizeArr;
+            var arr;
             getDataFromFile();
             
-
         } else {
             InitialPosition();
             if (IntervalTime > 0) {
                 setInterval(DesplayTreck, IntervalTime);
             }
         }
-
-
+        
     </script>
 </body>
 </html>

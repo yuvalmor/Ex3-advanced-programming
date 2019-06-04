@@ -107,11 +107,9 @@ namespace Exercise3.Controllers
             return sb.ToString();
         }
 
-        [HttpPost]
         public string GetPositionsFromFile(string fileName)
         {
             string positions = FlightModel.Instance.ReadData(fileName);
-            Console.WriteLine(positions);
             return positions;
         }
 
