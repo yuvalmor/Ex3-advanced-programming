@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using System.Xml;
-using System.Diagnostics;
 namespace Exercise3.Controllers
 {
     public class FlightController : Controller
