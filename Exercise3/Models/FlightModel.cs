@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
-using System.Diagnostics;
 using System.IO;
 
 namespace Exercise3.Models
@@ -64,9 +63,6 @@ namespace Exercise3.Models
 
         public string ReadData(string fileName)
         {
-
-            Debug.WriteLine(fileName);
-
             string path = HttpContext.Current.Server.MapPath(String.Format(Consts.SCENARIO_FILE, fileName));
             string[] lines = File.ReadAllLines(path);
             string data = "";
@@ -79,7 +75,6 @@ namespace Exercise3.Models
                 data += temp[1];
                 data += ",";
             }
-            Debug.WriteLine(data);
             return data;
         }
 

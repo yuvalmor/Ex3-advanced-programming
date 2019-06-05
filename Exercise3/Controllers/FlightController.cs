@@ -1,14 +1,10 @@
 ﻿using Exercise3.Models;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Web;
 using System.Web.Mvc;
 using System.Xml;
-
+using System.Diagnostics;
 namespace Exercise3.Controllers
 {
     public class FlightController : Controller
@@ -99,31 +95,19 @@ namespace Exercise3.Controllers
             string lonLine = client.GetRequestToSimulator("longitude");
             string rudderLine = client.GetRequestToSimulator("rudder");
             string throttleLine = client.GetRequestToSimulator("throttle");
-
-            Debug.WriteLine("in c# - getting info from simulator...");
-
+            
             string lat, lon, rudder, throttle;
             lat = client.GetInfo(latLine);
             lon = client.GetInfo(lonLine);
             rudder = client.GetInfo(rudderLine);
             throttle = client.GetInfo(throttleLine);
-
-            Debug.WriteLine("in c# - creating a position...");
-
+            
             Position position = new Position();
             position.Lat = Double.Parse(lat);
             position.Lon = Double.Parse(lon);
             position.Rudder = Double.Parse(rudder);
             position.Throttle = Double.Parse(throttle);
-
-            Debug.WriteLine("position is : ");
-            Debug.WriteLine(position.Lat);
-            Debug.WriteLine(position.Lon);
-            Debug.WriteLine(position.Rudder);
-            Debug.WriteLine(position.Throttle);
-
-
-            Debug.WriteLine("adding position to list...");
+            
             Position lastPosition;
             lock (FlightModel.Instance.getLock())
             {
@@ -161,9 +145,7 @@ namespace Exercise3.Controllers
         {
             if (FlightModel.Instance.GetPositions().Count >= FlightModel.Instance.GetNumSamples())
             {
-                Debug.WriteLine("starting saving");
                 FlightModel.Instance.WriteData(fileName);
-                Debug.WriteLine("finishing saving");
                 return 1;
             }
             return 0;

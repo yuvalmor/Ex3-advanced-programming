@@ -22,8 +22,7 @@
         canvas.width = window.innerWidth-80;
         canvas.height = window.innerHeight-80;
         var ctx = canvas.getContext("2d");
-        var IntervalTime = 1000*(@ViewBag.time);
-        console.log(IntervalTime);
+        var IntervalTime = 1000/(@ViewBag.time);
         function normalizeLongitude(lon) {
             var newLon = ((parseFloat(lon) + 180) * canvas.width / 360);
             return newLon;
@@ -59,11 +58,6 @@
             var newNormLat = normalizeLatitude(NewLat);
             var lastNormLon = normalizeLongitude(LastLon);
             var lastNormLat = normalizeLatitude(LastLat);
-            console.log("in track");
-            console.log(newNormLon);
-            console.log(newNormLat);
-            console.log(lastNormLon);
-            console.log(lastNormLat);
             ctx.moveTo(lastNormLon, lastNormLat);
             ctx.lineTo(newNormLon, newNormLat);
             ctx.strokeStyle = "black";
@@ -84,24 +78,14 @@
         }
 
         DisplayFromFile = function () {
-            console.log("in dis");
             if (iter < ((sizeArr-1) / 2)-1) {
-                console.log("start");
-                console.log(iter);
-                console.log(sizeArr);
-                console.log(arr[iter * 2]);
-                console.log(arr[(iter * 2) + 1]);
-                console.log(arr[(iter * 2) + 2]);
-                console.log(arr[(iter * 2) + 3]);
                 drawTreck(arr[(iter * 2) + 2], arr[(iter * 2) + 3], arr[(iter * 2)], arr[(iter * 2) + 1]);
             } else {
-                console.log("finish");
                 clearInterval(interval);
-                alert("finished");
+                var fileName = "@ViewBag.fileName";
+                alert("finished display from file "+fileName+".txt");
             }
-            console.log(iter);
             iter = iter + 1;
-            console.log("finish iteration");
         }
         getDataFromFile = function () {
             var file = "@ViewBag.fileName";
