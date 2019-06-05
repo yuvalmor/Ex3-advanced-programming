@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web;
 using System.IO;
+using System.Diagnostics;
 
 namespace Exercise3.Models
 {
@@ -94,6 +95,8 @@ namespace Exercise3.Models
                     file.WriteLine(line);
                 }
             }
+
+            Debug.WriteLine("end writing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         }
     }
 }
