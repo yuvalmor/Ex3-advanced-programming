@@ -11,6 +11,7 @@ namespace Exercise3.Models
         private readonly object locker = new object();
         private Client client;
         private List<Position> positions;
+        private int numSamples;
 
         public List<Position> GetPositions()
         {
@@ -20,6 +21,16 @@ namespace Exercise3.Models
         public object getLock()
         {
             return this.locker;
+        }
+
+        public int GetNumSamples()
+        {
+            return this.numSamples;
+        }
+
+        public void SetNumSamples(int num)
+        {
+            this.numSamples = num;
         }
 
         public Client GetClient()
