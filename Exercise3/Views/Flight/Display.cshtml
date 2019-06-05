@@ -24,21 +24,18 @@
         var ctx = canvas.getContext("2d");
         var IntervalTime = (@ViewBag.time) * 1000;
         console.log(IntervalTime);
-
-
         function normalizeLongitude(lon) {
             var newLon = ((parseFloat(lon) + 180) * canvas.width / 360);
             return newLon;
         }
-
         function normalizeLatitude(lat) {
             var newLat = ((parseFloat(lat) + 90) * canvas.height / 180);
             newLat = canvas.height - newLat;
             return newLat;
         }
-        
+
         draw = function (lon,lat) {
-            var normLon = normalizeLongitude(lon); 
+            var normLon = normalizeLongitude(lon);
             var normLat = normalizeLatitude(lat);
             ctx.arc(normLon,normLat,5,0,2*Math.PI);
             ctx.strokeStyle = "black";
@@ -46,7 +43,6 @@
             ctx.fill();
             ctx.stroke();
         };
-
         // get the first position
         InitialPosition = function () {
             var urlLoc = "/Flight/GetPlaneLocation";
@@ -58,26 +54,22 @@
                 draw(lon,lat);
             });
         };
-
         drawTreck = function (NewLon, NewLat, LastLon, LastLat) {
             var newNormLon = normalizeLongitude(NewLon);
             var newNormLat = normalizeLatitude(NewLat);
             var lastNormLon = normalizeLongitude(LastLon);
             var lastNormLat = normalizeLatitude(LastLat);
-
             console.log("in track");
             console.log(newNormLon);
             console.log(newNormLat);
             console.log(lastNormLon);
             console.log(lastNormLat);
-
             ctx.moveTo(lastNormLon, lastNormLat);
             ctx.lineTo(newNormLon, newNormLat);
             ctx.strokeStyle = "black";
             ctx.stroke();
         };
-
-        DesplayTreck = function () {
+        DisplayTreck = function () {
             var urlTreck = "/Flight/GetPlaneTreck";
             $.get(urlTreck, null, function (xml) {
                 var xmlDoc = $.parseXML(xml),
@@ -89,7 +81,7 @@
                 drawTreck(lon, lat, lastLon, lastLat);
             });
         }
-        
+
         DisplayFromFile = function () {
             console.log("in dis");
             if (iter < ((sizeArr-1) / 2)-1) {
@@ -101,7 +93,6 @@
                 console.log(arr[(iter * 2) + 2]);
                 console.log(arr[(iter * 2) + 3]);
                 drawTreck(arr[(iter * 2) + 2], arr[(iter * 2) + 3], arr[(iter * 2)], arr[(iter * 2) + 1]);
-
             } else {
                 console.log("finish");
                 clearInterval(interval);
@@ -111,7 +102,6 @@
             iter = iter + 1;
             console.log("finish iteration");
         }
-
         getDataFromFile = function () {
             var file = "@ViewBag.fileName";
             var urlTreck = "/Flight/GetPositionsFromFile";
@@ -122,7 +112,7 @@
                 interval = setInterval(DisplayFromFile, IntervalTime);
             });
         }
-        
+
         if (@ViewBag.readFromFile == 1) {
             var interval;
             var iter = 0;
@@ -132,10 +122,9 @@
         } else {
             InitialPosition();
             if (IntervalTime > 0) {
-                setInterval(DesplayTreck, IntervalTime);
+                setInterval(DisplayTreck, IntervalTime);
             }
         }
-        
     </script>
 </body>
 </html>
