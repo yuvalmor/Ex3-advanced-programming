@@ -19,10 +19,10 @@
     <canvas id="myCanvas"></canvas>
     <script>
         var canvas = document.getElementById("myCanvas");
-        canvas.width = window.innerWidth-100;
-        canvas.height = window.innerHeight-100;
+        canvas.width = window.innerWidth-80;
+        canvas.height = window.innerHeight-80;
         var ctx = canvas.getContext("2d");
-        var IntervalTime = 1000/(@ViewBag.time);
+        var IntervalTime = 1000*(@ViewBag.time);
         console.log(IntervalTime);
         function normalizeLongitude(lon) {
             var newLon = ((parseFloat(lon) + 180) * canvas.width / 360);

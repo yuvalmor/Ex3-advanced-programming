@@ -167,7 +167,6 @@ namespace Exercise3.Controllers
                 return 1;
             }
             return 0;
-            
         }
     }
 }
