@@ -39,9 +39,10 @@ namespace Exercise3.Controllers
         }
 
         [HttpGet]
-        public ActionResult Save(string ip, int port, int frequency, int duration, string fileName)
+        public ActionResult Save(string ip, int port, int frequency,int duration, string fileName)
         {
             FlightModel.Instance.InitialClient(ip, port);
+            FlightModel.Instance.SetNumSamples(duration * frequency);
             ViewBag.frequency = frequency;
             ViewBag.duration = duration;
             ViewBag.fileName = fileName;
@@ -67,7 +68,10 @@ namespace Exercise3.Controllers
             position.Rudder = Double.Parse(rudder);
             position.Throttle = Double.Parse(throttle);
 
-            FlightModel.Instance.GetPositions().Add(position);
+            lock (FlightModel.Instance.getLock())
+            {
+                FlightModel.Instance.GetPositions().Add(position);
+            }
 
             return PosToXml(position);
         }
@@ -96,11 +100,15 @@ namespace Exercise3.Controllers
             string rudderLine = client.GetRequestToSimulator("rudder");
             string throttleLine = client.GetRequestToSimulator("throttle");
 
+            Debug.WriteLine("in c# - getting info from simulator...");
+
             string lat, lon, rudder, throttle;
             lat = client.GetInfo(latLine);
             lon = client.GetInfo(lonLine);
             rudder = client.GetInfo(rudderLine);
             throttle = client.GetInfo(throttleLine);
+
+            Debug.WriteLine("in c# - creating a position...");
 
             Position position = new Position();
             position.Lat = Double.Parse(lat);
@@ -108,19 +116,21 @@ namespace Exercise3.Controllers
             position.Rudder = Double.Parse(rudder);
             position.Throttle = Double.Parse(throttle);
 
-            Debug.WriteLine("check");
+            Debug.WriteLine("position is : ");
             Debug.WriteLine(position.Lat);
             Debug.WriteLine(position.Lon);
             Debug.WriteLine(position.Rudder);
             Debug.WriteLine(position.Throttle);
 
+
+            Debug.WriteLine("adding position to list...");
             Position lastPosition;
             lock (FlightModel.Instance.getLock())
             {
                 lastPosition = FlightModel.Instance.GetPositions().Last();
                 FlightModel.Instance.GetPositions().Add(position);
             }
-
+            
             return TreckToXml(position, lastPosition);
         }
 
@@ -147,9 +157,17 @@ namespace Exercise3.Controllers
             return positions;
         }
 
-        public void SaveDataToFile(string fileName)
+        public int SaveDataToFile(string fileName)
         {
-            FlightModel.Instance.WriteData(fileName);
+            if (FlightModel.Instance.GetPositions().Count >= FlightModel.Instance.GetNumSamples())
+            {
+                Debug.WriteLine("starting saving");
+                FlightModel.Instance.WriteData(fileName);
+                Debug.WriteLine("finishing saving");
+                return 1;
+            }
+            return 0;
+            
         }
     }
 }
