@@ -53,9 +53,6 @@ namespace Exercise3.Models
 
         public string ReadData(string fileName)
         {
-
-            Debug.WriteLine(fileName);
-
             string path = HttpContext.Current.Server.MapPath(String.Format(Consts.SCENARIO_FILE, fileName));
             string[] lines = File.ReadAllLines(path);
             string data = "";
@@ -68,14 +65,15 @@ namespace Exercise3.Models
                 data += temp[1];
                 data += ",";
             }
-            Debug.WriteLine(data);
             return data;
         }
 
         public void WriteData(string fileName)
         {
-            string path = HttpContext.Current.Server.MapPath(String.Format(Consts.SCENARIO_FILE, fileName));
+            Debug.WriteLine("number positions!");
+            Debug.WriteLine(positions.Count);
 
+            string path = HttpContext.Current.Server.MapPath(String.Format(Consts.SCENARIO_FILE, fileName));
             string line;
             using (StreamWriter file = new StreamWriter(path))
             {

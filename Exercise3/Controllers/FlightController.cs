@@ -39,7 +39,7 @@ namespace Exercise3.Controllers
         }
 
         [HttpGet]
-        public ActionResult Save(string ip, int port, int frequency,int duration, string fileName)
+        public ActionResult Save(string ip, int port, int frequency, int duration, string fileName)
         {
             FlightModel.Instance.InitialClient(ip, port);
             ViewBag.frequency = frequency;
@@ -101,7 +101,7 @@ namespace Exercise3.Controllers
             lon = client.GetInfo(lonLine);
             rudder = client.GetInfo(rudderLine);
             throttle = client.GetInfo(throttleLine);
-            
+
             Position position = new Position();
             position.Lat = Double.Parse(lat);
             position.Lon = Double.Parse(lon);
@@ -120,7 +120,7 @@ namespace Exercise3.Controllers
                 lastPosition = FlightModel.Instance.GetPositions().Last();
                 FlightModel.Instance.GetPositions().Add(position);
             }
-            
+
             return TreckToXml(position, lastPosition);
         }
 
