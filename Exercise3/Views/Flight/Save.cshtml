@@ -60,13 +60,7 @@
             var newNormLat = normalizeLatitude(NewLat);
             var lastNormLon = normalizeLongitude(LastLon);
             var lastNormLat = normalizeLatitude(LastLat);
-
-            console.log("in js - drawing position...");
-            console.log(lastNormLon);
-            console.log(lastNormLat);
-            console.log(newNormLon);
-            console.log(newNormLat);
-
+           
             ctx.moveTo(lastNormLon, lastNormLat);
             ctx.lineTo(newNormLon, newNormLat);
             ctx.strokeStyle = "black";
@@ -74,7 +68,6 @@
         };
 
         DisplayTreck = function () {
-            console.log("in display track javascript");
             var urlTreck = "/Flight/GetPlaneTreck";
             $.get(urlTreck, null, function (xml) {
                 var xmlDoc = $.parseXML(xml),
@@ -103,8 +96,6 @@
                     });
                 }
             }
-            console.log("iterator number:");
-            console.log(iter);
             iter = iter + 1;
         };
 
@@ -113,10 +104,7 @@
         var frequency = 1000/(@ViewBag.frequency);
         var duration = @ViewBag.duration;
         var totalIter = @ViewBag.frequency * duration;
-        console.log("totle iter: ");
-        console.log(totalIter);
         var interval = setInterval(SaveAndDisplayTreck, frequency);
-        console.log("finish js");
     </script>
 </body>
 </html>
