@@ -1,6 +1,7 @@
 ﻿using Exercise3.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -37,18 +38,34 @@ namespace Exercise3.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult Save(string ip, int port, int frequency,int duration, string fileName)
+        {
+            FlightModel.Instance.InitialClient(ip, port);
+            ViewBag.frequency = frequency;
+            ViewBag.duration = duration;
+            ViewBag.fileName = fileName;
+            return View();
+        }
+
         public string GetPlaneLocation()
         {
             Client client = FlightModel.Instance.GetClient();
             string latLine = client.GetRequestToSimulator("latitude");
             string lonLine = client.GetRequestToSimulator("longitude");
+            string rudderLine = client.GetRequestToSimulator("rudder");
+            string throttleLine = client.GetRequestToSimulator("throttle");
 
             string lat = client.GetInfo(latLine);
             string lon = client.GetInfo(lonLine);
+            string rudder = client.GetInfo(rudderLine);
+            string throttle = client.GetInfo(throttleLine);
 
             Position position = new Position();
             position.Lat = Double.Parse(lat);
             position.Lon = Double.Parse(lon);
+            position.Rudder = Double.Parse(rudder);
+            position.Throttle = Double.Parse(throttle);
 
             FlightModel.Instance.GetPositions().Add(position);
 
@@ -76,17 +93,34 @@ namespace Exercise3.Controllers
 
             string latLine = client.GetRequestToSimulator("latitude");
             string lonLine = client.GetRequestToSimulator("longitude");
+            string rudderLine = client.GetRequestToSimulator("rudder");
+            string throttleLine = client.GetRequestToSimulator("throttle");
 
-            string lat = client.GetInfo(latLine);
-            string lon = client.GetInfo(lonLine);
-
+            string lat, lon, rudder, throttle;
+            lat = client.GetInfo(latLine);
+            lon = client.GetInfo(lonLine);
+            rudder = client.GetInfo(rudderLine);
+            throttle = client.GetInfo(throttleLine);
+            
             Position position = new Position();
             position.Lat = Double.Parse(lat);
             position.Lon = Double.Parse(lon);
-            
-            Position lastPosition = FlightModel.Instance.GetPositions().Last();
-            FlightModel.Instance.GetPositions().Add(position);
+            position.Rudder = Double.Parse(rudder);
+            position.Throttle = Double.Parse(throttle);
 
+            Debug.WriteLine("check");
+            Debug.WriteLine(position.Lat);
+            Debug.WriteLine(position.Lon);
+            Debug.WriteLine(position.Rudder);
+            Debug.WriteLine(position.Throttle);
+
+            Position lastPosition;
+            lock (FlightModel.Instance.getLock())
+            {
+                lastPosition = FlightModel.Instance.GetPositions().Last();
+                FlightModel.Instance.GetPositions().Add(position);
+            }
+            
             return TreckToXml(position, lastPosition);
         }
 
@@ -113,5 +147,9 @@ namespace Exercise3.Controllers
             return positions;
         }
 
+        public void SaveDataToFile(string fileName)
+        {
+            FlightModel.Instance.WriteData(fileName);
+        }
     }
 }

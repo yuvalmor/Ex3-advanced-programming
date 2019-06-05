@@ -6,6 +6,8 @@ namespace Exercise3.Models
     {
         public double Lon { get; set; }
         public double Lat { get; set; }
+        public double Rudder { get; set; }
+        public double Throttle { get; set; }
 
         public void NewPosToXml(XmlWriter writer)
         {

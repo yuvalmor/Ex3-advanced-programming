@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Display";
+    ViewBag.Title = "Save";
 }
 <!DOCTYPE html>
 <html>
@@ -13,7 +13,7 @@
         }
     </style>
     <meta name="viewport" content="width=device-width" />
-    <title>Display</title>
+    <title>Save</title>
 </head>
 <body background="~/Utils/map.png" class="bg1">
     <canvas id="myCanvas"></canvas>
@@ -22,12 +22,12 @@
         canvas.width = window.innerWidth-100;
         canvas.height = window.innerHeight-100;
         var ctx = canvas.getContext("2d");
-        var IntervalTime = (@ViewBag.time) * 1000;
-        console.log(IntervalTime);
+
         function normalizeLongitude(lon) {
             var newLon = ((parseFloat(lon) + 180) * canvas.width / 360);
             return newLon;
         }
+
         function normalizeLatitude(lat) {
             var newLat = ((parseFloat(lat) + 90) * canvas.height / 180);
             newLat = canvas.height - newLat;
@@ -43,7 +43,7 @@
             ctx.fill();
             ctx.stroke();
         };
-        // get the first position
+
         InitialPosition = function () {
             var urlLoc = "/Flight/GetPlaneLocation";
             $.get(urlLoc, null, function (xml) {
@@ -54,16 +54,19 @@
                 draw(lon,lat);
             });
         };
+
         drawTreck = function (NewLon, NewLat, LastLon, LastLat) {
             var newNormLon = normalizeLongitude(NewLon);
             var newNormLat = normalizeLatitude(NewLat);
             var lastNormLon = normalizeLongitude(LastLon);
             var lastNormLat = normalizeLatitude(LastLat);
+
             console.log("in track");
-            console.log(newNormLon);
-            console.log(newNormLat);
             console.log(lastNormLon);
             console.log(lastNormLat);
+            console.log(newNormLon);
+            console.log(newNormLat);
+
             ctx.moveTo(lastNormLon, lastNormLat);
             ctx.lineTo(newNormLon, newNormLat);
             ctx.strokeStyle = "black";
@@ -83,49 +86,31 @@
             });
         }
 
-        DisplayFromFile = function () {
-            console.log("in dis");
-            if (iter < ((sizeArr-1) / 2)-1) {
-                console.log("start");
-                console.log(iter);
-                console.log(sizeArr);
-                console.log(arr[iter * 2]);
-                console.log(arr[(iter * 2) + 1]);
-                console.log(arr[(iter * 2) + 2]);
-                console.log(arr[(iter * 2) + 3]);
-                drawTreck(arr[(iter * 2) + 2], arr[(iter * 2) + 3], arr[(iter * 2)], arr[(iter * 2) + 1]);
+        SaveAndDisplayTreck = function () {
+            // first iteration - get plane position
+            if (iter == 0) {
+                InitialPosition();
             } else {
-                console.log("finish");
-                clearInterval(interval);
-                alert("finished");
+                if (iter < totalIter) {
+                    DisplayTreck();
+                } else {
+                    var url = "/Flight/SaveDataToFile";
+                    $.get(url, { fileName: file }, function () { });
+                    clearInterval(interval);
+                }
             }
+
+            console.log("iterator number:");
             console.log(iter);
             iter = iter + 1;
-            console.log("finish iteration");
-        }
-        getDataFromFile = function () {
-            var file = "@ViewBag.fileName";
-            var urlTreck = "/Flight/GetPositionsFromFile";
-            $.get(urlTreck, { fileName: file }, function (data) {
-                arr = data.split(",");
-                sizeArr = arr.length;
-                draw(arr[0], arr[1]);
-                interval = setInterval(DisplayFromFile, IntervalTime);
-            });
-        }
+        };
 
-        if (@ViewBag.readFromFile == 1) {
-            var interval;
-            var iter = 0;
-            var sizeArr;
-            var arr;
-            getDataFromFile();
-        } else {
-            InitialPosition();
-            if (IntervalTime > 0) {
-                setInterval(DisplayTreck, IntervalTime);
-            }
-        }
+        var iter = 0;
+        var file = "@ViewBag.fileName";
+        var frequency = 1000/(@ViewBag.frequency);
+        var duration = @ViewBag.duration;
+        var totalIter = @ViewBag.frequency * duration;
+        var interval = setInterval(SaveAndDisplayTreck, frequency);
     </script>
 </body>
 </html>

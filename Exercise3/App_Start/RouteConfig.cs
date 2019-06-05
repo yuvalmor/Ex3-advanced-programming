@@ -16,6 +16,9 @@ namespace Exercise3
            routes.MapRoute("Display", "display/{ip}/{port}/{time}",
            defaults: new { controller = "Flight", action = "Display", time = UrlParameter.Optional });
 
+           routes.MapRoute("Save", "save/{ip}/{port}/{frequency}/{duration}/{fileName}",
+           defaults: new { controller = "Flight", action = "Save",});
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
