@@ -65,6 +65,12 @@ namespace Exercise3.Models
             }
         }
 
+        // clear instance
+        public static void ClearInstance()
+        {
+            s_instace = null;
+        }
+
         // Constructor, initial the position list
         public FlightModel()
         {
@@ -121,6 +127,7 @@ namespace Exercise3.Models
                         "," + positions[i].Rudder + "," + positions[i].Throttle;
                     file.WriteLine(line);
                 }
+                file.Close();
             }
         }
     }

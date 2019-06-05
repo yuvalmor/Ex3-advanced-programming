@@ -5,14 +5,17 @@ namespace Exercise3.Models
 {
     public class Client
     {
-        
         private TcpClient client;
-
+        // ctor
         public Client()
         {
             client = new TcpClient();
         }
 
+        /*
+         * This function sends connect request to the server (simulator)
+         * repeatedly until connection is made or interupted
+         */
         public void Connect(string ip, int port)
         {
             while (true)
@@ -26,11 +29,10 @@ namespace Exercise3.Models
             }
         }
 
-        public void Close()
-        {
-            this.client.Close();
-        }
-
+        /*
+         * This function prepeares a request command for the simulator
+         * based on given field
+         */
         public string GetRequestToSimulator(string kind)
         {
             string request = "get ";
@@ -57,6 +59,10 @@ namespace Exercise3.Models
             return request;
         }
 
+        /*
+         * This function sends command to the server and reads the response
+         * which is the value of the field requested and returns it
+         */
         public string GetInfo(string request)
         {
             string info = "";
@@ -86,6 +92,5 @@ namespace Exercise3.Models
             catch { }
             return info;
         }
-
     }
 }

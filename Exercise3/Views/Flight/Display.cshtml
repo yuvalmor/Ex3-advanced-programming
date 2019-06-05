@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Display";
 }
 <!DOCTYPE html>
@@ -18,10 +17,16 @@
 <body background="~/Utils/map.png" class="bg1">
     <canvas id="myCanvas"></canvas>
     <script>
+        // creating a canvas that spreads over the screen
         var canvas = document.getElementById("myCanvas");
         canvas.width = window.innerWidth-80;
         canvas.height = window.innerHeight-80;
         var ctx = canvas.getContext("2d");
+
+        /*
+         * normallization functions - bridge between the robast values of the
+         * simulator and the positive view the program holds
+         */
         function normalizeLongitude(lon) {
             var newLon = ((parseFloat(lon) + 180) * canvas.width / 360);
             return newLon;
@@ -32,6 +37,9 @@
             return newLat;
         }
 
+        /*
+         * This function draws a single position on the screen, by given position
+         */
         draw = function (lon,lat) {
             var normLon = normalizeLongitude(lon);
             var normLat = normalizeLatitude(lat);
@@ -41,7 +49,11 @@
             ctx.fill();
             ctx.stroke();
         };
-        // get the first position
+
+        /*
+         * This function invoks a c# function to recieve position from the simulator
+         * and then sends the position to draw function.
+         */
         InitialPosition = function () {
             var urlLoc = "/Flight/GetPlaneLocation";
             $.get(urlLoc, null, function (xml) {
@@ -52,18 +64,26 @@
                 draw(lon,lat);
             });
         };
+
+        /*
+         * This function draws a line between to position points
+         */
         drawTreck = function (NewLon, NewLat, LastLon, LastLat) {
             var newNormLon = normalizeLongitude(NewLon);
             var newNormLat = normalizeLatitude(NewLat);
             var lastNormLon = normalizeLongitude(LastLon);
             var lastNormLat = normalizeLatitude(LastLat);
-           
+
             ctx.moveTo(lastNormLon, lastNormLat);
             ctx.lineTo(newNormLon, newNormLat);
             ctx.strokeStyle = "black";
             ctx.stroke();
         };
 
+        /*
+         * This function invokes a c# function that calcultes to last points
+         * sampled from the simulator and sends it to draw function.
+         */
         DisplayTreck = function () {
             var urlTreck = "/Flight/GetPlaneTreck";
             $.get(urlTreck, null, function (xml) {
@@ -77,6 +97,10 @@
             });
         }
 
+        /*
+         * This function is called by intervals and sends info of 2 points
+         * from a file to draw function , in the end displays message
+         */
         DisplayFromFile = function () {
             if (iter < ((sizeArr-1) / 2)-1) {
                 drawTreck(arr[(iter * 2) + 2], arr[(iter * 2) + 3], arr[(iter * 2)], arr[(iter * 2) + 1]);
@@ -87,6 +111,11 @@
             }
             iter = iter + 1;
         }
+
+        /*
+         * This function invoks a c# function to get a string of positions
+         * from a given file, then sends to draw in intervals.
+         */
         getDataFromFile = function () {
             var file = "@ViewBag.fileName";
             var urlTreck = "/Flight/GetPositionsFromFile";
@@ -98,6 +127,7 @@
             });
         }
 
+        // separation of a display from file and samples from the simulator
         if (@ViewBag.readFromFile == 1) {
             var interval;
             var iter = 0;
