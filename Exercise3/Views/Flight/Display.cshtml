@@ -22,7 +22,6 @@
         canvas.width = window.innerWidth-80;
         canvas.height = window.innerHeight-80;
         var ctx = canvas.getContext("2d");
-        var IntervalTime = 1000/(@ViewBag.time);
         function normalizeLongitude(lon) {
             var newLon = ((parseFloat(lon) + 180) * canvas.width / 360);
             return newLon;
@@ -58,6 +57,7 @@
             var newNormLat = normalizeLatitude(NewLat);
             var lastNormLon = normalizeLongitude(LastLon);
             var lastNormLat = normalizeLatitude(LastLat);
+           
             ctx.moveTo(lastNormLon, lastNormLat);
             ctx.lineTo(newNormLon, newNormLat);
             ctx.strokeStyle = "black";
@@ -103,10 +103,12 @@
             var iter = 0;
             var sizeArr;
             var arr;
+            var IntervalTime = 1000/(@ViewBag.time);
             getDataFromFile();
         } else {
             InitialPosition();
-            if (IntervalTime > 0) {
+            if (@ViewBag.time > 0) {
+                var IntervalTime = 1000/(@ViewBag.time);
                 setInterval(DisplayTreck, IntervalTime);
             }
         }
