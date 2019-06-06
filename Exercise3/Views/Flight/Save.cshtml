@@ -118,9 +118,11 @@
 
         var iter = 0;
         var file = "@ViewBag.fileName";
-        var frequency = 1000/(@ViewBag.frequency);
+        //var frequency = 1000/(@ViewBag.frequency);
+        var frequency = 1000*(@ViewBag.frequency);
         var duration = @ViewBag.duration;
-        var totalIter = @ViewBag.frequency * duration;
+        //var totalIter = @ViewBag.frequency * duration;
+        totalIter = duration / @ViewBag.frequency;
         InitialPosition();
         iter = iter + 1;
         var interval = setInterval(SaveAndDisplayTreck, frequency);

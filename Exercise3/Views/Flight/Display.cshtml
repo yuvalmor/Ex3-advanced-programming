@@ -74,13 +74,6 @@
             var lastNormLon = normalizeLongitude(LastLon);
             var lastNormLat = normalizeLatitude(LastLat);
 
-            console.log("treck:");
-            console.log(lastNormLon);
-            console.log(lastNormLat);
-            console.log(newNormLon);
-            console.log(newNormLat);
-
-
             ctx.moveTo(lastNormLon, lastNormLat);
             ctx.lineTo(newNormLon, newNormLat);
             ctx.strokeStyle = "black";
@@ -143,14 +136,16 @@
             var iter = 0;
             var sizeArr;
             var arr;
-            var IntervalTime = 1000/(@ViewBag.time);
+            //var IntervalTime = 1000/(@ViewBag.time);
+            var IntervalTime = 1000*(@ViewBag.time);
             getDataFromFile();
         } else {
             var numDisplayMade = @ViewBag.countDisplays;
             var interval2;
             InitialPosition();
             if (@ViewBag.time > 0) {
-                var IntervalTime = 1000/(@ViewBag.time);
+               // var IntervalTime = 1000/(@ViewBag.time);
+                var IntervalTime = 1000*(@ViewBag.time);
                 interval2 = setInterval(DisplayTreck, IntervalTime);
             }
         }
