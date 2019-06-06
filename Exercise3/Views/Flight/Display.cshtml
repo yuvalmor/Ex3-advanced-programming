@@ -92,6 +92,9 @@
          * sampled from the simulator and sends it to draw function.
          */
         DisplayTreck = function () {
+            if (numDisplayMade < @ViewBag.countDisplays) {
+                clearInterval(interval2);
+            }
             var urlTreck = "/Flight/GetPlaneTreck";
             $.get(urlTreck, null, function (xml) {
                 var xmlDoc = $.parseXML(xml),
@@ -143,10 +146,12 @@
             var IntervalTime = 1000/(@ViewBag.time);
             getDataFromFile();
         } else {
+            var numDisplayMade = @ViewBag.countDisplays;
+            var interval2;
             InitialPosition();
             if (@ViewBag.time > 0) {
                 var IntervalTime = 1000/(@ViewBag.time);
-                setInterval(DisplayTreck, IntervalTime);
+                interval2 = setInterval(DisplayTreck, IntervalTime);
             }
         }
     </script>

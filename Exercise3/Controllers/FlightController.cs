@@ -1,6 +1,7 @@
 ﻿using Exercise3.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
@@ -24,11 +25,15 @@ namespace Exercise3.Controllers
         [HttpGet]
         public ActionResult Display(string ip, int port, int? time = 0)
         {
-            FlightModel.ClearInstance();
+            FlightModel flightModel = FlightModel.Instance;
+            FlightModel.Instance.InitializeList();
+            Debug.WriteLine(FlightModel.Instance.GetCountDisplays());
+            FlightModel.Instance.SetCountDisplays();
+            ViewBag.countDisplays = FlightModel.Instance.GetCountDisplays();
+
             System.Net.IPAddress validIp = null;
             ViewBag.readFromFile = 0;
             // Check if the given parameter is valid ip address
-            FlightModel flightModel = FlightModel.Instance;
             if (System.Net.IPAddress.TryParse(ip, out validIp))
             {
                 // Connect to the simulator server with the appropriate ip and port
@@ -53,9 +58,9 @@ namespace Exercise3.Controllers
         [HttpGet]
         public ActionResult Save(string ip, int port, int frequency,int duration, string fileName)
         {
-            FlightModel.ClearInstance();
-            // Conect to the simulator server
             FlightModel flightModel = FlightModel.Instance;
+            FlightModel.Instance.InitializeList();
+            // Conect to the simulator server
             flightModel.InitialClient(ip, port);
             // Save the parameters
             flightModel.SetNumSamples(duration * frequency); 

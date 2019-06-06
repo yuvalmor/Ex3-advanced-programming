@@ -19,7 +19,18 @@ namespace Exercise3.Models
         private Client client;
         // Variable that hold the number of times we need to sampke the plane track
         private int numSamples;
+        private int countDisplays = 0;
         
+        public int GetCountDisplays()
+        {
+            return this.countDisplays;
+        }
+
+        public void SetCountDisplays()
+        {
+            this.countDisplays++;
+        }
+
         // Getter for the position list
         public List<Position> GetPositions()
         {
@@ -65,23 +76,24 @@ namespace Exercise3.Models
             }
         }
 
-        // clear instance
-        public static void ClearInstance()
-        {
-            s_instace = null;
-        }
-
         // Constructor, initial the position list
-        public FlightModel()
+        public void InitializeList()
         {
+            if (this.positions != null)
+            {
+                this.positions.Clear();
+            }
             this.positions = new List<Position>();
         }
 
         // Create connection to the server 
         public void InitialClient(string ip, int port)
         {
-            client = new Client();
-            client.Connect(ip, port);
+            if (client == null)
+            {
+                client = new Client();
+                client.Connect(ip, port);
+            }
         }
 
         /*
