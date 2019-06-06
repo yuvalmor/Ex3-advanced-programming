@@ -1,0 +1,165 @@
+commit eab72216803ebc0c1ceedb8f446c5b79cfc52491
+Merge: 65e2b13 cd82880
+Author: NOAM SABALA <noam.sabala@live.biu.ac.il>
+Date:   Wed Jun 5 20:34:22 2019 +0300
+
+    Merge branch 'master' of https://github.com/yuvalmor/Exercise3
+
+commit 65e2b134f89898247f06ab24d1d2f7be00e6c3cd
+Author: NOAM SABALA <noam.sabala@live.biu.ac.il>
+Date:   Wed Jun 5 20:33:42 2019 +0300
+
+    sync
+
+commit cd82880b4432cb2dd37ec4d9c79c2caef6522e5c
+Author: yuvalmor94 <yuvalmor94@gmail.com>
+Date:   Wed Jun 5 20:31:10 2019 +0300
+
+    comments on flight model
+
+commit 92738911af21e1cb84f527256a4201462b115700
+Author: yuvalmor94 <yuvalmor94@gmail.com>
+Date:   Wed Jun 5 20:15:08 2019 +0300
+
+    comments on the position class
+
+commit 3e052108c3d54836d1b9b8ea5f1791afd36a9851
+Author: yuvalmor94 <yuvalmor94@gmail.com>
+Date:   Wed Jun 5 20:10:27 2019 +0300
+
+    after testing + a little bit comments
+
+commit 68b8241e3019957562076c9b0188c739f7ae5ccd
+Merge: 7eca23c 7a24a9e
+Author: yuvalmor94 <yuvalmor94@gmail.com>
+Date:   Wed Jun 5 17:29:21 2019 +0300
+
+    Merge branch 'master' of https://github.com/yuvalmor/Exercise3
+
+commit 7eca23c64a16d5252f9779b1dfb7c65cc53b4071
+Author: yuvalmor94 <yuvalmor94@gmail.com>
+Date:   Wed Jun 5 17:29:11 2019 +0300
+
+    sync
+
+commit 7a24a9e527f714cedd072063188434946ac88408
+Author: NOAM SABALA <noam.sabala@live.biu.ac.il>
+Date:   Wed Jun 5 17:28:24 2019 +0300
+
+    to yuval
+
+commit 3af3fbab86f6d11a66f39b59090fe616e30b06f3
+Author: NOAM SABALA <noam.sabala@live.biu.ac.il>
+Date:   Wed Jun 5 16:44:58 2019 +0300
+
+    display from file testers
+
+commit c2a925dbeb5a3a29e848d3f086079aad7ecad8ee
+Merge: 48e8de5 9ace018
+Author: yuvalmor94 <yuvalmor94@gmail.com>
+Date:   Wed Jun 5 16:37:51 2019 +0300
+
+    merge
+
+commit 48e8de501a12f1c5c761f24557e2cef70a507461
+Author: yuvalmor94 <yuvalmor94@gmail.com>
+Date:   Wed Jun 5 16:35:05 2019 +0300
+
+    sync
+
+commit 9ace01808eb59682fc47ab790627018d5b1d28e3
+Author: NOAM SABALA <noam.sabala@live.biu.ac.il>
+Date:   Wed Jun 5 16:20:49 2019 +0300
+
+    save workish
+
+commit d64cd9879ff4cd5b20c7f3ef8f4a33faf7856a7b
+Merge: a71e28d 0c11700
+Author: NOAM SABALA <noam.sabala@live.biu.ac.il>
+Date:   Wed Jun 5 10:16:22 2019 +0300
+
+    sync
+
+commit a71e28dce00fbfa2906687d91550a6bcf55f916d
+Author: NOAM SABALA <noam.sabala@live.biu.ac.il>
+Date:   Wed Jun 5 10:11:22 2019 +0300
+
+    sync
+
+commit 0c117004ccf8e0176f3a1434bac72da464b3d213
+Author: yuvalmor94 <yuvalmor94@gmail.com>
+Date:   Tue Jun 4 21:57:27 2019 +0300
+
+    save isnt working well...
+
+commit a677c927f507261a40099af4e09238506da1faef
+Author: NOAM SABALA <noam.sabala@live.biu.ac.il>
+Date:   Tue Jun 4 16:57:24 2019 +0300
+
+    transfer to yuval
+
+commit ee15a9f921d11fa7486307932ede2d2874f1d93e
+Author: NOAM SABALA <noam.sabala@live.biu.ac.il>
+Date:   Tue Jun 4 15:01:11 2019 +0300
+
+    display works with files
+
+commit 0fc3dae6957fefe1adb358c3140bdf175ec165ff
+Author: NOAM SABALA <noam.sabala@live.biu.ac.il>
+Date:   Tue Jun 4 11:55:50 2019 +0300
+
+    changes in display
+
+commit 6bf90f39c542e760d6a606ca0c3944d1eb4c03ba
+Author: NOAM SABALA <noam.sabala@live.biu.ac.il>
+Date:   Tue Jun 4 08:45:59 2019 +0300
+
+    normallization works
+
+commit 1b3bced27aff7f7bdf4a7d58f906b916258d9cde
+Author: NOAM SABALA <noam.sabala@live.biu.ac.il>
+Date:   Mon Jun 3 22:29:28 2019 +0300
+
+    check
+
+commit b7a8f31861843b265e297a6ffc46c195717e0374
+Author: yuvalmor94 <yuvalmor94@gmail.com>
+Date:   Mon Jun 3 22:22:54 2019 +0300
+
+    track is workingggg!!!!!!!!!!!
+
+commit 8530edde52991c0f9a169bc2ce09049102d65521
+Author: yuvalmor94 <yuvalmor94@gmail.com>
+Date:   Mon Jun 3 21:48:40 2019 +0300
+
+    display working :))
+
+commit 89feb5b69b9fb3990411da670e32fb3d4af67d42
+Author: yuvalmor94 <yuvalmor94@gmail.com>
+Date:   Mon Jun 3 19:09:28 2019 +0300
+
+    updated index
+
+commit c7230f5b84e3627c70f36cb2d05e3c8911cfaaa9
+Author: yuvalmor94 <yuvalmor94@gmail.com>
+Date:   Mon Jun 3 18:08:56 2019 +0300
+
+    adding consts and Client
+
+commit 506b044da79b358e3ba0244b14eaee15bbcbcd7f
+Author: yuvalmor94 <yuvalmor94@gmail.com>
+Date:   Mon Jun 3 17:41:10 2019 +0300
+
+    first commit
+
+commit 4ef81c6c8c7affe96d01762fb166c151979a6cb6
+Author: yuvalmor94 <yuvalmor94@gmail.com>
+Date:   Mon Jun 3 17:38:07 2019 +0300
+
+    Add project files.
+
+commit 972acc37c47652dad4a6d9e889f7db10f321a1c5
+Author: yuvalmor94 <yuvalmor94@gmail.com>
+Date:   Mon Jun 3 17:38:05 2019 +0300
+
+    Add .gitignore and .gitattributes.

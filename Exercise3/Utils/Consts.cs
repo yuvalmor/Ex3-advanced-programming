@@ -1,6 +1,7 @@
 ﻿
 namespace Exercise3.Models
 {
+    // constants for the entire program
     public class Consts
     {
         public const int BUFFER_SIZE = 1024;

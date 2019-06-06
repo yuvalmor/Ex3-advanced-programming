@@ -65,6 +65,12 @@ namespace Exercise3.Models
             }
         }
 
+        // clear instance
+        public static void ClearInstance()
+        {
+            s_instace = null;
+        }
+
         // Constructor, initial the position list
         public FlightModel()
         {
@@ -112,15 +118,17 @@ namespace Exercise3.Models
             string path = HttpContext.Current.Server.MapPath(String.Format(Consts.SCENARIO_FILE, fileName));
             string line;
             // Create the file
-            StreamWriter file = new StreamWriter(path);
-            // Read all the positions in the list, and write the data of each position into the file
-            for (int i = 0; i < positions.Count; i++)
+            using (StreamWriter file = new StreamWriter(path))
             {
-                line = positions[i].Lon + "," + positions[i].Lat +
-                    "," + positions[i].Rudder + "," + positions[i].Throttle;
-                file.WriteLine(line);
+                // Read all the positions in the list, and write the data of each position into the file
+                for (int i = 0; i < positions.Count; i++)
+                {
+                    line = positions[i].Lon + "," + positions[i].Lat +
+                        "," + positions[i].Rudder + "," + positions[i].Throttle;
+                    file.WriteLine(line);
+                }
+                file.Close();
             }
-            file.Close();
         }
     }
 }

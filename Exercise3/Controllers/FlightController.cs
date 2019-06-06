@@ -1,5 +1,6 @@
 ﻿using Exercise3.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
@@ -23,13 +24,15 @@ namespace Exercise3.Controllers
         [HttpGet]
         public ActionResult Display(string ip, int port, int? time = 0)
         {
+            FlightModel.ClearInstance();
             System.Net.IPAddress validIp = null;
             ViewBag.readFromFile = 0;
             // Check if the given parameter is valid ip address
+            FlightModel flightModel = FlightModel.Instance;
             if (System.Net.IPAddress.TryParse(ip, out validIp))
             {
                 // Connect to the simulator server with the appropriate ip and port
-                FlightModel.Instance.InitialClient(ip, port);
+                flightModel.InitialClient(ip, port);
                 ViewBag.time = time;
             }
             else
@@ -50,16 +53,17 @@ namespace Exercise3.Controllers
         [HttpGet]
         public ActionResult Save(string ip, int port, int frequency,int duration, string fileName)
         {
+            FlightModel.ClearInstance();
             // Conect to the simulator server
-            FlightModel.Instance.InitialClient(ip, port);
+            FlightModel flightModel = FlightModel.Instance;
+            flightModel.InitialClient(ip, port);
             // Save the parameters
-            FlightModel.Instance.SetNumSamples(duration * frequency); 
+            flightModel.SetNumSamples(duration * frequency); 
             ViewBag.frequency = frequency;
             ViewBag.duration = duration;
             ViewBag.fileName = fileName;
             return View();
         }
-
 
         /*
          *  GetPlaneLocation - take the longitude, latitude, throttle and rudder values from the Simulator.
@@ -93,7 +97,6 @@ namespace Exercise3.Controllers
             // Save the data into xml file
             return PosToXml(position);
         }
-
 
         /*
          * PosToXml -  Write the position to xml file
@@ -140,16 +143,23 @@ namespace Exercise3.Controllers
             position.Rudder = Double.Parse(rudder);
             position.Throttle = Double.Parse(throttle);
             // Get the last position and push the current position
-            Position lastPosition;
+            List<Position> positions = FlightModel.Instance.GetPositions();
+            Position lastPosition = new Position();
             lock (FlightModel.Instance.getLock())
             {
-                lastPosition = FlightModel.Instance.GetPositions().Last();
-                FlightModel.Instance.GetPositions().Add(position);
+                if (positions.Count > 0) {
+                    lastPosition = positions.Last();
+                    
+                } else
+                {
+                    lastPosition.Lon = 0;
+                    lastPosition.Lat = 0;
+                }
             }
+            FlightModel.Instance.GetPositions().Add(position);
             // Save the data into xml file
             return TreckToXml(position, lastPosition);
         }
-
 
         private string TreckToXml(Position newPosition, Position lastPossition)
         {
