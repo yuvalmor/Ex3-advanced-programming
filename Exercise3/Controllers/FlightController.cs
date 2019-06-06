@@ -62,8 +62,7 @@ namespace Exercise3.Controllers
             // Conect to the simulator server
             flightModel.InitialClient(ip, port);
             // Save the parameters
-
-            //flightModel.SetNumSamples(duration * frequency);
+            
             flightModel.SetNumSamples(duration / frequency);
             ViewBag.frequency = frequency;
             ViewBag.duration = duration;

@@ -1,3 +1,60 @@
+commit ef4c5f743a12dbb6fe3e779aba60508b8ffde5a8
+Author: NOAM SABALA <noam.sabala@live.biu.ac.il>
+Date:   Thu Jun 6 17:53:49 2019 +0300
+
+    sync
+
+commit 0d9d593e198525f95c963c91822a03c977faefa5
+Author: yuvalmor94 <yuvalmor94@gmail.com>
+Date:   Thu Jun 6 16:57:21 2019 +0300
+
+    now its in seconds and its workong :)
+    * Save can be a problem.. most of the time it worked
+
+commit 691265e3c945e639ed7dfc056fe05e744eb4a8b2
+Merge: c3df657 3f72e50
+Author: yuvalmor94 <yuvalmor94@gmail.com>
+Date:   Thu Jun 6 14:02:45 2019 +0300
+
+    merge
+
+commit c3df657df39695cdf6940a00925b702e39132520
+Author: yuvalmor94 <yuvalmor94@gmail.com>
+Date:   Thu Jun 6 14:01:54 2019 +0300
+
+    commit for sync
+
+commit 3f72e504bb3949017a797f8ca3463bad74d6a5ae
+Author: NOAM SABALA <noam.sabala@live.biu.ac.il>
+Date:   Thu Jun 6 12:11:23 2019 +0300
+
+    solution works
+
+commit 1c9113a31bb165c7c6add48258de8a1c42ef17c3
+Merge: 8d25dbf e765cf7
+Author: yuvalmor94 <yuvalmor94@gmail.com>
+Date:   Thu Jun 6 09:16:21 2019 +0300
+
+    commit for sync
+
+commit 8d25dbf211aefd3ccd8b82bc5599aa55f265941e
+Author: yuvalmor94 <yuvalmor94@gmail.com>
+Date:   Thu Jun 6 09:13:49 2019 +0300
+
+    sync?
+
+commit e765cf7262da3d0b7c1cee11436af2babffc1e79
+Author: NOAM SABALA <noam.sabala@live.biu.ac.il>
+Date:   Thu Jun 6 09:04:01 2019 +0300
+
+    fix initial position
+
+commit 1acb275f9fc4779b99af982cc851c04f9b0ca429
+Author: NOAM SABALA <noam.sabala@live.biu.ac.il>
+Date:   Wed Jun 5 23:50:17 2019 +0300
+
+    sync
+
 commit eab72216803ebc0c1ceedb8f446c5b79cfc52491
 Merge: 65e2b13 cd82880
 Author: NOAM SABALA <noam.sabala@live.biu.ac.il>
