@@ -98,7 +98,6 @@ namespace Exercise3.Controllers
             return PosToXml(position);
         }
 
-
         /*
          * PosToXml -  Write the position to xml file
          */
@@ -150,9 +149,14 @@ namespace Exercise3.Controllers
             {
                 if (positions.Count > 0) {
                     lastPosition = positions.Last();
-                    FlightModel.Instance.GetPositions().Add(position);
+                    
+                } else
+                {
+                    lastPosition.Lon = 0;
+                    lastPosition.Lat = 0;
                 }
             }
+            FlightModel.Instance.GetPositions().Add(position);
             // Save the data into xml file
             return TreckToXml(position, lastPosition);
         }
