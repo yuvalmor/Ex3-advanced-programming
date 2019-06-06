@@ -74,6 +74,13 @@
             var lastNormLon = normalizeLongitude(LastLon);
             var lastNormLat = normalizeLatitude(LastLat);
 
+            console.log("treck:");
+            console.log(lastNormLon);
+            console.log(lastNormLat);
+            console.log(newNormLon);
+            console.log(newNormLat);
+
+
             ctx.moveTo(lastNormLon, lastNormLat);
             ctx.lineTo(newNormLon, newNormLat);
             ctx.strokeStyle = "black";
