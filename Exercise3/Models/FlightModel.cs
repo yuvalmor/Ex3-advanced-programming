@@ -112,16 +112,15 @@ namespace Exercise3.Models
             string path = HttpContext.Current.Server.MapPath(String.Format(Consts.SCENARIO_FILE, fileName));
             string line;
             // Create the file
-            using (StreamWriter file = new StreamWriter(path))
+            StreamWriter file = new StreamWriter(path);
+            // Read all the positions in the list, and write the data of each position into the file
+            for (int i = 0; i < positions.Count; i++)
             {
-                // Read all the positions in the list, and write the data of each position into the file
-                for (int i = 0; i < positions.Count; i++)
-                {
-                    line = positions[i].Lon + "," + positions[i].Lat +
-                        "," + positions[i].Rudder + "," + positions[i].Throttle;
-                    file.WriteLine(line);
-                }
+                line = positions[i].Lon + "," + positions[i].Lat +
+                    "," + positions[i].Rudder + "," + positions[i].Throttle;
+                file.WriteLine(line);
             }
+            file.Close();
         }
     }
 }

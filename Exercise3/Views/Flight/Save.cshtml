@@ -83,7 +83,7 @@
         SaveAndDisplayTreck = function () {
             // first iteration - get plane position
             if (iter == 0) {
-                InitialPosition();
+                
             } else {
                 if (iter < totalIter) {
                     DisplayTreck();
@@ -99,11 +99,13 @@
             iter = iter + 1;
         };
 
-        var iter = 0;
+
         var file = "@ViewBag.fileName";
         var frequency = 1000/(@ViewBag.frequency);
         var duration = @ViewBag.duration;
         var totalIter = @ViewBag.frequency * duration;
+        InitialPosition();
+        var iter = 1;
         var interval = setInterval(SaveAndDisplayTreck, frequency);
     </script>
 </body>
